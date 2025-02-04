@@ -137,11 +137,9 @@ Authorization: Bearer <your_token_here>
   "error": "Detailed error message (if available)"
 }
 ```
-
 # 📄 Jobseeker API Documentation
 
 ## Base URL
-
 `/jobseeker`
 
 ---
@@ -149,24 +147,19 @@ Authorization: Bearer <your_token_here>
 ## 🚀 1. Update Jobseeker Details
 
 ### Endpoint
-
 `PUT /jobseeker/update/:id`
 
 ### Description
-
 This route allows an authenticated jobseeker to update their profile information using their unique ID.
 
 ### 🔐 Authentication
-
 - **Required:** Yes (uses middleware `auth`)
 
 ### Request Parameters
-
-- **Path Parameter:**
+- **Path Parameter:**  
   - `id` (string) – The unique identifier of the jobseeker.
 
 ### 📝 Request Body
-
 Send a JSON object with the fields to be updated.  
 **Only provided fields will be updated.**
 
@@ -210,8 +203,7 @@ Send a JSON object with the fields to be updated.
 
 ### ⚡ Response
 
-- **✅ Success (200):**
-
+- **✅ Success (200):**  
 ```json
 {
   "message": "Jobseeker updated successfully.",
@@ -232,16 +224,14 @@ Send a JSON object with the fields to be updated.
 }
 ```
 
-- **❌ Error (404 - Jobseeker Not Found):**
-
+- **❌ Error (404 - Jobseeker Not Found):**  
 ```json
 {
   "message": "Jobseeker not found."
 }
 ```
 
-- **⚠️ Error (500 - Server Error):**
-
+- **⚠️ Error (500 - Server Error):**  
 ```json
 {
   "message": "An error occurred. Please try again later.",
@@ -250,7 +240,6 @@ Send a JSON object with the fields to be updated.
 ```
 
 ### 📌 Notes
-
 - The `password` will be securely hashed if provided.
 - Undefined fields will be ignored during the update.
 - Requires authentication via `auth` middleware.
@@ -260,42 +249,35 @@ Send a JSON object with the fields to be updated.
 ## ❌ 2. Delete Jobseeker
 
 ### Endpoint
-
 `DELETE /jobseeker/delete/:id`
 
 ### Description
-
 This route allows an authenticated jobseeker to delete their profile permanently using their unique ID.
 
 ### 🔐 Authentication
-
 - **Required:** Yes (uses middleware `auth`)
 
 ### Request Parameters
-
-- **Path Parameter:**
+- **Path Parameter:**  
   - `id` (string) – The unique identifier of the jobseeker to be deleted.
 
 ### ⚡ Response
 
-- **✅ Success (200):**
-
+- **✅ Success (200):**  
 ```json
 {
   "message": "Jobseeker deleted successfully."
 }
 ```
 
-- **❌ Error (404 - Jobseeker Not Found):**
-
+- **❌ Error (404 - Jobseeker Not Found):**  
 ```json
 {
   "message": "Jobseeker not found."
 }
 ```
 
-- **⚠️ Error (500 - Server Error):**
-
+- **⚠️ Error (500 - Server Error):**  
 ```json
 {
   "message": "An error occurred. Please try again later.",
@@ -303,4 +285,10 @@ This route allows an authenticated jobseeker to delete their profile permanently
 }
 ```
 
+
+
 ---
+
+
+
+
