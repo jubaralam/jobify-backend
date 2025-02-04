@@ -8,7 +8,7 @@ const connection = require("./config/db");
 const homeRoute = require("./homeRoute");
 server.use("/", homeRoute);
 
-const recruiterAuth = require("./middleware/recruiterAuth.middleware");
+// const recruiterAuth = require("./middleware/recruiterAuth.middleware");
 
 const jobseekerRouter = require("./routes/jobSeeker.route");
 server.use("/api/jobseeker", jobseekerRouter);
@@ -17,7 +17,7 @@ const recruiterRouter = require("./routes/recruiter.route");
 server.use("/api/recruiter", recruiterRouter);
 
 const jobRouter = require("./routes/job.route");
-server.use("/api/job", recruiterAuth, jobRouter);
+server.use("/api/job", jobRouter);
 
 server.listen(PORT, async () => {
   try {
