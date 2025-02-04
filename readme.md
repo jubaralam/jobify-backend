@@ -137,5 +137,158 @@ Authorization: Bearer <your_token_here>
   "error": "Detailed error message (if available)"
 }
 ```
+# 📄 Jobseeker API Documentation
+
+## Base URL
+`/jobseeker`
 
 ---
+
+## 🚀 1. Update Jobseeker Details
+
+### Endpoint
+`PUT /jobseeker/update/:id`
+
+### Description
+This route allows an authenticated jobseeker to update their profile information using their unique ID.
+
+### 🔐 Authentication
+- **Required:** Yes (uses middleware `auth`)
+
+### Request Parameters
+- **Path Parameter:**  
+  - `id` (string) – The unique identifier of the jobseeker.
+
+### 📝 Request Body
+Send a JSON object with the fields to be updated.  
+**Only provided fields will be updated.**
+
+```json
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "phone_no": "9876543210",
+  "password": "newSecurePassword123",
+  "dob": "1995-05-10",
+  "city": "Mumbai",
+  "education_details": [
+    {
+      "degree": "B.Tech",
+      "institution": "IIT Bombay",
+      "year_of_passing": 2017
+    }
+  ],
+  "work_experience": [
+    {
+      "company": "TechCorp",
+      "position": "Software Engineer",
+      "duration": "2 years",
+      "description": "Worked on full-stack development."
+    }
+  ],
+  "skills": {
+    "programming": ["JavaScript", "React", "Node.js"]
+  },
+  "applied_jobs": ["654abc987def3210"],
+  "resume_link": "https://example.com/resume.pdf",
+  "portfolio_link": "https://portfolio.example.com",
+  "github_link": "https://github.com/johndoe",
+  "job_preferences": {
+    "job_type": ["Full-time"],
+    "preferred_location": "Remote",
+    "expected_salary": 800000
+  }
+}
+```
+
+### ⚡ Response
+
+- **✅ Success (200):**  
+```json
+{
+  "message": "Jobseeker updated successfully.",
+  "user": {
+    "_id": "60f7e123456abc789def4567",
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "phone_no": "9876543210",
+    "city": "Mumbai",
+    "skills": { "programming": ["JavaScript", "React", "Node.js"] },
+    "job_preferences": {
+      "job_type": ["Full-time"],
+      "preferred_location": "Remote",
+      "expected_salary": 800000
+    },
+    "updatedAt": "2025-02-04T12:34:56.789Z"
+  }
+}
+```
+
+- **❌ Error (404 - Jobseeker Not Found):**  
+```json
+{
+  "message": "Jobseeker not found."
+}
+```
+
+- **⚠️ Error (500 - Server Error):**  
+```json
+{
+  "message": "An error occurred. Please try again later.",
+  "error": "Detailed error message here."
+}
+```
+
+### 📌 Notes
+- The `password` will be securely hashed if provided.
+- Undefined fields will be ignored during the update.
+- Requires authentication via `auth` middleware.
+
+---
+
+## ❌ 2. Delete Jobseeker
+
+### Endpoint
+`DELETE /jobseeker/delete/:id`
+
+### Description
+This route allows an authenticated jobseeker to delete their profile permanently using their unique ID.
+
+### 🔐 Authentication
+- **Required:** Yes (uses middleware `auth`)
+
+### Request Parameters
+- **Path Parameter:**  
+  - `id` (string) – The unique identifier of the jobseeker to be deleted.
+
+### ⚡ Response
+
+- **✅ Success (200):**  
+```json
+{
+  "message": "Jobseeker deleted successfully."
+}
+```
+
+- **❌ Error (404 - Jobseeker Not Found):**  
+```json
+{
+  "message": "Jobseeker not found."
+}
+```
+
+- **⚠️ Error (500 - Server Error):**  
+```json
+{
+  "message": "An error occurred. Please try again later.",
+  "error": "Detailed error message here."
+}
+```
+
+
+
+---
+
+
+
+

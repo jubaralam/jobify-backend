@@ -8,6 +8,11 @@ const connection = require("./config/db");
 const jobseekerRouter = require("./routes/jobSeeker.route");
 server.use("/api/jobseeker", jobseekerRouter);
 
+
+
+const homeRoute = require("./homeRoute")
+server.use("/",homeRoute)
+
 server.listen(PORT, async () => {
   try {
     await connection;
