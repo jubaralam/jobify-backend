@@ -247,7 +247,7 @@ jobRouter.get("/", async (req, res) => {
       .limit(parseInt(limit));
 
     if (jobs.length === 0) {
-      return res.status(404).send({ message: "No customers found" });
+      return res.status(404).send({ message: "No jobs found" });
     }
 
     // Calculate total pages
@@ -261,6 +261,23 @@ jobRouter.get("/", async (req, res) => {
         totalJobs,
         limit: parseInt(limit),
       },
+    });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+// get jobs
+jobRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const jobs = await JobModel.findById({ _id: id });
+
+    if (jobs.length === 0) {
+      return res.status(404).send({ message: "No jobs found" });
+    }
+
+    res.status(200).send({
+      data: jobs,
     });
   } catch (error) {
     res.status(500).send({ error: error.message });
