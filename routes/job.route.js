@@ -235,6 +235,26 @@ jobRouter.get("/get/:id", recruiterAuth, async (req, res) => {
   }
 });
 
+
+// get a job
+jobRouter.get("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      const jobs = await JobModel.findById({ _id: id });
+  
+      if (jobs.length === 0) {
+        return res.status(404).send({ message: "No jobs found" });
+      }
+  
+      res.status(200).send({
+        data: jobs,
+      });
+    } catch (error) {
+      res.status(500).send({ error: error.message });
+    }
+  });
+
+
 // get jobs
 jobRouter.get("/", async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
@@ -266,23 +286,7 @@ jobRouter.get("/", async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
-// get jobs
-jobRouter.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const jobs = await JobModel.findById({ _id: id });
 
-    if (jobs.length === 0) {
-      return res.status(404).send({ message: "No jobs found" });
-    }
-
-    res.status(200).send({
-      data: jobs,
-    });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
 
 jobRouter.get("/recent-post", async (req, res) => {
   try {
