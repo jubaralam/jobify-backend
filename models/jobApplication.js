@@ -16,6 +16,11 @@ const jobApplicationSchema = new mongoose.Schema({
     ref: "Job",
     required: true,
   },
+  job_title: {
+    type: String,
+
+    required: true,
+  },
 
   // Application Status & Metadata
   status: {
