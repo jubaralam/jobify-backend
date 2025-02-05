@@ -672,3 +672,99 @@ module.exports = JobModel;
   "job_status": "Open"
 }
 ```
+# Job API Documentation
+
+## **GET /:id**
+
+### **Description:**
+Retrieves the details of a specific job using its unique ID.
+
+### **Endpoint:**
+`GET /:id`
+
+### **Parameters:**
+- **Path Parameter:**
+  - `id` (string) - The unique identifier of the job.
+
+### **Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "data": {
+      "_id": "67a2402ae97760fe9d94a652",
+      "job_title": "Data Scientist",
+      "job_description": "We are seeking a skilled Data Scientist...",
+      "job_type": "Full-time",
+      "salary_range": "$90,000 - $120,000",
+      "required_experience": "3-5 years",
+      "skills_required": ["Python", "R", "Machine Learning"],
+      "education_required": "Master's Degree...",
+      "application_deadline": "2025-04-15T23:59:59.000Z",
+      "job_category": "Data Science",
+      "job_status": "Open",
+      "posted_date": "2025-02-04T16:28:26.814Z"
+    }
+  }
+  ```
+
+- **Error Responses:**
+  - **404 Not Found:**
+    ```json
+    {
+      "message": "No jobs found"
+    }
+    ```
+  - **500 Internal Server Error:**
+    ```json
+    {
+      "error": "Error message"
+    }
+    ```
+
+### **Usage Example:**
+```bash
+GET /67a2402ae97760fe9d94a652
+```
+
+---
+
+## **GET /recent-post**
+
+### **Description:**
+Retrieves the 10 most recently posted jobs, sorted by creation date.
+
+### **Endpoint:**
+`GET /recent-post`
+
+### **Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "data": [
+      {
+        "_id": "67a2402ae97760fe9d94a652",
+        "job_title": "Data Scientist",
+        "posted_date": "2025-02-04T16:28:26.814Z"
+      },
+      {
+        "_id": "67a2402ae97760fe9d94a653",
+        "job_title": "Frontend Developer",
+        "posted_date": "2025-02-03T14:15:20.814Z"
+      }
+    ]
+  }
+  ```
+
+- **Error Response:**
+  - **500 Internal Server Error:**
+    ```json
+    {
+      "error": "Error message"
+    }
+    ```
+
+### **Usage Example:**
+```bash
+GET /recent-post
+```
+
