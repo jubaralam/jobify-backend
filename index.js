@@ -17,11 +17,15 @@ server.use("/", homeRoute);
 const jobseekerRouter = require("./routes/jobSeeker.route");
 server.use("/api/jobseeker", jobseekerRouter);
 
+
+
 const recruiterRouter = require("./routes/recruiter.route");
 server.use("/api/recruiter", recruiterRouter);
 
 const jobRouter = require("./routes/job.route");
 server.use("/api/job", jobRouter);
+const jobApplicationRouter =require("./routes/jobApplication.route")
+server.use("/api/job-application",jobApplicationRouter)
 
 server.listen(PORT, async () => {
   try {

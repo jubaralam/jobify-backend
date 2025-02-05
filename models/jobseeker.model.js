@@ -14,6 +14,7 @@ const jobseekerSchema = mongoose.Schema(
         institution: { type: String, required: true },
         year_of_passing: { type: Number, required: true },
       },
+      
     ],
     work_experience: [
       {
