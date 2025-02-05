@@ -1,6 +1,10 @@
 const express = require("express");
 const server = express();
 server.use(express.json()); // for converting data into json format
+
+const cors = require("cors")
+
+server.use(cors()) //cors for cross origin access 
 const detenv = require("dotenv").config();
 const PORT = process.env.PORT || 5500;
 const connection = require("./config/db");
