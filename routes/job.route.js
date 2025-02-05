@@ -215,7 +215,7 @@ jobRouter.get("/get-all", recruiterAuth, async (req, res) => {
 });
 
 // get a job by creator
-jobRouter.get("/get/:id",recruiterAuth, async (req, res) => {
+jobRouter.get("/get/:id", recruiterAuth, async (req, res) => {
   const { id } = req.params;
   const { _id } = req.user;
 
@@ -266,4 +266,40 @@ jobRouter.get("/", async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+jobRouter.get("/recent-post", async (req, res) => {
+  try {
+    const recentJobPosts = await JobModel.aggregate([
+      {
+        $sort: { createdAt: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ]);
+
+    res.status(200).send({ data: recentJobPosts });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+const getRecent = async () => {
+  try {
+    const recentJobPosts = await JobModel.aggregate([
+      {
+        $sort: { createdAt: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ]);
+
+    console.log(recentJobPosts);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// getRecent()
 module.exports = jobRouter;
