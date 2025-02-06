@@ -37,7 +37,7 @@ const jobseekerSchema = mongoose.Schema(
         required: true,
       },
       preferred_location: { type: String, required: true },
-      expected_salary: { type: Number, required: true },
+      expected_salary: { type: String, required: true },
     },
   },
   {
