@@ -7,6 +7,7 @@ const jobseekerSchema = mongoose.Schema(
     phone_no: { type: String, required: true },
     password: { type: String, required: true },
     dob: { type: Date, required: true },
+    role: { type: String, default:"jobseeker" },
     city: { type: String, required: true },
     education_details: [
       {
@@ -25,7 +26,7 @@ const jobseekerSchema = mongoose.Schema(
       },
     ],
     skills: { type: Object, required: true },
-    applied_jobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
+   
     resume_link: { type: String, required: true },
     portfolio_link: { type: String, required: true },
     github_link: { type: String },

@@ -10,14 +10,14 @@ jobRouter.post("/create", recruiterAuth, async (req, res) => {
   const recruiter_id = req.user._id;
   const {
     job_title,
-    job_description,
     job_type,
     salary_range,
     required_experience,
-    skills_required,
     education_required,
-    application_deadline,
     job_category,
+    job_description,
+    skills_required,
+    application_deadline,
   } = req.body;
 
   // Combined validation for required fields
@@ -238,11 +238,26 @@ jobRouter.get("/get/:id", recruiterAuth, async (req, res) => {
 // get jobs
 jobRouter.get("/", async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
+  const {
+    job_title,
+    job_type,
+    salary_range,
+    required_experience,
+    education_required,
+    job_category,
+  } = req.body;
   try {
-    const totalJobs = await JobModel.countDocuments();
+    const queries = {};
+    if (job_title) queries.job_title = job_title;
+    if (job_type) queries.job_type = job_type;
+    if (salary_range) queries.salary_range = salary_range;
+    if (required_experience) queries.required_experience = required_experience;
+    if (education_required) queries.education_required = education_required;
+    if (job_category) queries.job_category = job_category;
+    const totalJobs = await JobModel.countDocuments(queries);
 
     // 2️⃣ Fetch paginated customers
-    const jobs = await JobModel.find()
+    const jobs = await JobModel.find(queries)
       .skip((page - 1) * limit)
       .limit(parseInt(limit));
 
