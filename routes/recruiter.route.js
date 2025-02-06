@@ -21,7 +21,7 @@ recruiterRouter.post("/register", async (req, res) => {
       description,
       industry,
       location,
-      posted_jobs,
+
       team_size,
       social_media,
     } = req.body;
@@ -36,7 +36,6 @@ recruiterRouter.post("/register", async (req, res) => {
       !description ||
       !industry ||
       !location ||
-      !posted_jobs ||
       !team_size ||
       !social_media
     ) {

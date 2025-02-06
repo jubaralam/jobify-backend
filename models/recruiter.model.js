@@ -12,10 +12,10 @@ const recruiterSchema = mongoose.Schema({
   description: { type: String, required: true },
   industry: { type: String, required: true },
   location: { type: String, required: true },
-  posted_jobs: { type: Array, required: true },
+
   team_size: { type: String, required: true },
   social_media: { type: Array, required: true },
-  verified_status: { type: Boolean, required: false },
+  verified_status: { type: Boolean, default: false },
 });
 
 const RecruiterModel = mongoose.model("recruiter", recruiterSchema);
