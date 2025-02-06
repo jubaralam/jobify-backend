@@ -64,6 +64,7 @@ recruiterRouter.post("/register", async (req, res) => {
       description,
       industry,
       location,
+
       team_size,
       social_media,
     });
@@ -157,5 +158,9 @@ recruiterRouter.delete("/delete/:id", recruiterAuth, async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 });
+
+
+
+
 
 module.exports = recruiterRouter;

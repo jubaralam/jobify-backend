@@ -1,7 +1,7 @@
 const express = require("express");
 const jobRouter = express.Router();
 const JobModel = require("../models/job.model");
-
+const mongoose = require("mongoose");
 const recruiterAuth = require("../middleware/recruiterAuth.middleware");
 
 const chechAuthority = require("../middleware/checkAuthority.middleware");
@@ -299,6 +299,49 @@ jobRouter.get("/recent-post", async (req, res) => {
   }
 });
 
+
+jobRouter.get("/get-applicants", recruiterAuth, async (req, res) => {
+  try {
+    // Ensure recruiterId is ObjectId if needed
+    const recruiterId = new mongoose.Types.ObjectId(req.user._id);
+
+    const jobsData = await JobModel.aggregate([
+      {
+        $match: { recruiter_id: recruiterId }, // Filter jobs by recruiter
+      },
+      {
+        $lookup: {
+          from: "jobapplications", // Correct collection name
+          localField: "_id",
+          foreignField: "job_id",
+          as: "applications",
+        },
+      },
+      
+      {
+        $group: {
+          _id: null,
+          totalJobs: { $sum: 1 },
+          totalApplicants: { $sum: "$totalApplicants" },
+          jobs: { $push: "$$ROOT" },
+        },
+      },
+    ]);
+
+    if (!jobsData.length) {
+      return res.status(404).json({ message: "No job details found" });
+    }
+
+    console.log(jobsData);
+    res.status(200).json({ data: jobsData });
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
 // get a job
 jobRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
@@ -316,5 +359,61 @@ jobRouter.get("/:id", async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+
+const getAppliedJobs = async () => {
+  try {
+    const recruiterId = new mongoose.Types.ObjectId("67a5131d7fcf53f697ee6892");
+
+    const applicantsData = JobModel.aggregate([
+      {
+        $lookup: {
+          from: "jobapplication", // Match with applications collection
+          localField: "_id",
+          foreignField: "job_id",
+          as: "applications",
+        },
+      },
+    ]);
+
+    console.log("applicants ", applicantsData);
+
+    const jobsData = await JobModel.aggregate([
+      {
+        $match: { recruiter_id: recruiterId }, // Fetch jobs posted by recruiter
+      },
+      {
+        $lookup: {
+          from: "jobapplication", // Match with applications collection
+          localField: "_id",
+          foreignField: "job_id",
+          as: "applications",
+        },
+      },
+      {
+        $project: {
+          jobTitle: "$job_title", // Fixed field name
+          jobId: "$_id",
+          totalApplicants: { $size: "$applications" }, // Count applicants
+        },
+      },
+
+      {
+        $group: {
+          _id: null,
+          totalJobs: { $sum: 1 },
+          totalApplicants: { $sum: "$totalApplicants" },
+          jobs: { $push: "$$ROOT" },
+        },
+      },
+    ]);
+
+    console.log(jobsData);
+  } catch (error) {
+    console.log("Error:", error.message);
+  }
+};
+
+// getAppliedJobs();
 
 module.exports = jobRouter;

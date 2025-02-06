@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const RecruiterModel = require("../models/recruiter.model")
+const RecruiterModel = require("../models/recruiter.model");
 
 const recruiterAuth = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
@@ -16,11 +16,14 @@ const recruiterAuth = async (req, res, next) => {
     if (!user) {
       return res
         .status(401)
-        .send({ message: "Unauthorized access. User not found." });
+        .json({ message: "Unauthorized access. User not found." });
     }
 
-   
-
+    if (user.role !== "recruiter") {
+      return res
+        .status(403)
+        .json({ message: "Access denied. Not a recruiter." });
+    }
     req.user = user;
     next();
   } catch (error) {
